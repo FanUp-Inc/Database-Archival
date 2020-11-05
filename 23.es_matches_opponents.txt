@@ -1,0 +1,23 @@
+-- Table: public.es_matches_opponents
+
+-- DROP TABLE public.es_matches_opponents;
+
+CREATE TABLE public.es_matches_opponents
+(
+    id integer NOT NULL DEFAULT nextval('es_matches_opponents_id_seq'::regclass),
+    es_match_id integer,
+    opponent_type character varying(255) COLLATE pg_catalog."default",
+    opponent_id integer,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT es_matches_opponents_pkey PRIMARY KEY (id),
+    CONSTRAINT es_matches_opponents_es_match_id_fkey FOREIGN KEY (es_match_id)
+        REFERENCES public.es_matches (es_match_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.es_matches_opponents
+    OWNER to backend;

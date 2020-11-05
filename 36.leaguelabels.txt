@@ -1,0 +1,24 @@
+-- Table: public.LeagueLabels
+
+-- DROP TABLE public."LeagueLabels";
+
+CREATE TABLE public."LeagueLabels"
+(
+    id integer NOT NULL DEFAULT nextval('"LeagueLabels_id_seq"'::regclass),
+    league_id integer,
+    lable character varying(255) COLLATE pg_catalog."default",
+    type character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "LeagueLabels_pkey" PRIMARY KEY (id),
+    CONSTRAINT "LeagueLabels_league_id_fkey" FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."LeagueLabels"
+    OWNER to backend;

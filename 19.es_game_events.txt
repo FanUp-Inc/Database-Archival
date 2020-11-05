@@ -1,0 +1,31 @@
+-- Table: public.es_game_events
+
+-- DROP TABLE public.es_game_events;
+
+CREATE TABLE public.es_game_events
+(
+    id integer NOT NULL DEFAULT nextval('es_game_events_id_seq'::regclass),
+    game_id integer,
+    tournament_id integer,
+    match_id integer,
+    ingame_timestamp integer,
+    is_first boolean,
+    type character varying(255) COLLATE pg_catalog."default",
+    payload json,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT es_game_events_pkey PRIMARY KEY (id),
+    CONSTRAINT es_game_events_game_id_fkey FOREIGN KEY (game_id)
+        REFERENCES public.games (game_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT es_game_events_tournament_id_fkey FOREIGN KEY (tournament_id)
+        REFERENCES public.tournaments (tournament_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.es_game_events
+    OWNER to backend;

@@ -1,0 +1,18 @@
+-- Table: public.Settings
+
+-- DROP TABLE public."Settings";
+
+CREATE TABLE public."Settings"
+(
+    id integer NOT NULL DEFAULT nextval('"Settings_id_seq"'::regclass),
+    welcome_points double precision,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Settings_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Settings"
+    OWNER to backend;

@@ -1,0 +1,34 @@
+-- Table: public.Notifications
+
+-- DROP TABLE public."Notifications";
+
+CREATE TABLE public."Notifications"
+(
+    id integer NOT NULL DEFAULT nextval('"Notifications_id_seq"'::regclass),
+    user_id integer,
+    bet_id integer,
+    comment_id integer,
+    follower_id integer,
+    show_user_id integer,
+    show_group_id integer,
+    message character varying(255) COLLATE pg_catalog."default",
+    notification_type character varying(255) COLLATE pg_catalog."default",
+    is_read integer,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Notifications_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Notifications_bet_id_fkey" FOREIGN KEY (bet_id)
+        REFERENCES public."Bets" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Notifications_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Notifications"
+    OWNER to backend;

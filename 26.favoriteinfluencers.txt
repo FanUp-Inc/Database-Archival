@@ -1,0 +1,27 @@
+-- Table: public.FavoriteInfluencers
+
+-- DROP TABLE public."FavoriteInfluencers";
+
+CREATE TABLE public."FavoriteInfluencers"
+(
+    id integer NOT NULL DEFAULT nextval('"FavoriteInfluencers_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    influencer_id integer NOT NULL,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "FavoriteInfluencers_pkey" PRIMARY KEY (id),
+    CONSTRAINT "FavoriteInfluencers_influencer_id_fkey" FOREIGN KEY (influencer_id)
+        REFERENCES public."Influencers" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "FavoriteInfluencers_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."FavoriteInfluencers"
+    OWNER to backend;

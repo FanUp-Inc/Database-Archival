@@ -1,0 +1,23 @@
+-- Table: public.ContactInvitations
+
+-- DROP TABLE public."ContactInvitations";
+
+CREATE TABLE public."ContactInvitations"
+(
+    id integer NOT NULL DEFAULT nextval('"ContactInvitations_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    mobile character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "ContactInvitations_pkey" PRIMARY KEY (id),
+    CONSTRAINT "ContactInvitations_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."ContactInvitations"
+    OWNER to backend;

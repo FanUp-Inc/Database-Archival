@@ -1,0 +1,27 @@
+-- Table: public.lol_frame_teams
+
+-- DROP TABLE public.lol_frame_teams;
+
+CREATE TABLE public.lol_frame_teams
+(
+    id integer NOT NULL DEFAULT nextval('lol_frame_teams_id_seq'::regclass),
+    team_id integer,
+    drakes integer,
+    gold integer,
+    kills integer,
+    nashors integer,
+    score integer,
+    towers integer,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT lol_frame_teams_pkey PRIMARY KEY (id),
+    CONSTRAINT lol_frame_teams_team_id_fkey FOREIGN KEY (team_id)
+        REFERENCES public."Teams" (ps_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.lol_frame_teams
+    OWNER to backend;

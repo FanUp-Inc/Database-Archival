@@ -1,0 +1,25 @@
+-- Table: public.PlayerBetstims
+
+-- DROP TABLE public."PlayerBetstims";
+
+CREATE TABLE public."PlayerBetstims"
+(
+    id integer NOT NULL DEFAULT nextval('"PlayerBetstims_id_seq"'::regclass),
+    match_id integer,
+    player_id integer,
+    stat_id integer,
+    stat_name character varying(255) COLLATE pg_catalog."default",
+    stim_type character varying(255) COLLATE pg_catalog."default",
+    stim_context_title character varying(255) COLLATE pg_catalog."default",
+    stim_context_text character varying(255) COLLATE pg_catalog."default",
+    details_date timestamp with time zone,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "PlayerBetstims_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."PlayerBetstims"
+    OWNER to backend;

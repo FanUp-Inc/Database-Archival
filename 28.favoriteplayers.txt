@@ -1,0 +1,27 @@
+-- Table: public.FavoritePlayers
+
+-- DROP TABLE public."FavoritePlayers";
+
+CREATE TABLE public."FavoritePlayers"
+(
+    id integer NOT NULL DEFAULT nextval('"FavoritePlayers_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    player_id integer NOT NULL,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "FavoritePlayers_pkey" PRIMARY KEY (id),
+    CONSTRAINT "FavoritePlayers_player_id_fkey" FOREIGN KEY (player_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "FavoritePlayers_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."FavoritePlayers"
+    OWNER to backend;

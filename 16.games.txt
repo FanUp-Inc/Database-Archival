@@ -1,0 +1,19 @@
+-- Table: public.games
+
+-- DROP TABLE public.games;
+
+CREATE TABLE public.games
+(
+    id integer NOT NULL DEFAULT nextval('games_id_seq'::regclass),
+    game_id integer,
+    game_type text COLLATE pg_catalog."default",
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT games_pkey PRIMARY KEY (id),
+    CONSTRAINT games_game_id_key UNIQUE (game_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.games
+    OWNER to backend;

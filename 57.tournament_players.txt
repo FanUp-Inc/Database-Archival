@@ -1,0 +1,26 @@
+-- Table: public.tournaments_players
+
+-- DROP TABLE public.tournaments_players;
+
+CREATE TABLE public.tournaments_players
+(
+    id integer NOT NULL DEFAULT nextval('tournaments_players_id_seq'::regclass),
+    player_id integer,
+    tournament_id integer,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT tournaments_players_pkey PRIMARY KEY (id),
+    CONSTRAINT tournaments_players_player_id_fkey FOREIGN KEY (player_id)
+        REFERENCES public."Players" (ps_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT tournaments_players_tournament_id_fkey FOREIGN KEY (tournament_id)
+        REFERENCES public.tournaments (tournament_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tournaments_players
+    OWNER to backend;

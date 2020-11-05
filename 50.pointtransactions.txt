@@ -1,0 +1,38 @@
+-- Table: public.PointTransactions
+
+-- DROP TABLE public."PointTransactions";
+
+CREATE TABLE public."PointTransactions"
+(
+    id integer NOT NULL DEFAULT nextval('"PointTransactions_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    bet_id integer,
+    bet_type character varying(255) COLLATE pg_catalog."default",
+    group_id integer,
+    bet_group_id character varying(255) COLLATE pg_catalog."default",
+    particular character varying(255) COLLATE pg_catalog."default",
+    points double precision,
+    type character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    event_id integer,
+    CONSTRAINT "PointTransactions_pkey" PRIMARY KEY (id),
+    CONSTRAINT "PointTransactions_bet_id_fkey" FOREIGN KEY (bet_id)
+        REFERENCES public."Bets" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "PointTransactions_group_id_fkey" FOREIGN KEY (group_id)
+        REFERENCES public."Groups" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "PointTransactions_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."PointTransactions"
+    OWNER to backend;

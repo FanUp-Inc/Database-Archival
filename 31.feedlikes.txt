@@ -1,0 +1,25 @@
+-- Table: public.FeedLikes
+
+-- DROP TABLE public."FeedLikes";
+
+CREATE TABLE public."FeedLikes"
+(
+    id integer NOT NULL DEFAULT nextval('"FeedLikes_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    bet_group_id character varying(255) COLLATE pg_catalog."default",
+    is_like integer,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    like_type integer,
+    CONSTRAINT "FeedLikes_pkey" PRIMARY KEY (id),
+    CONSTRAINT "FeedLikes_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."FeedLikes"
+    OWNER to backend;

@@ -1,0 +1,31 @@
+-- Table: public.MatchOdds
+
+-- DROP TABLE public."MatchOdds";
+
+CREATE TABLE public."MatchOdds"
+(
+    id integer NOT NULL DEFAULT nextval('"MatchOdds_id_seq"'::regclass),
+    match_id_db integer,
+    match_id character varying(255) COLLATE pg_catalog."default",
+    moneyline_home double precision,
+    moneyline_away double precision,
+    spread double precision,
+    spread_home double precision,
+    spread_away double precision,
+    total double precision,
+    total_over double precision,
+    total_under double precision,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "MatchOdds_pkey" PRIMARY KEY (id),
+    CONSTRAINT "MatchOdds_match_id_db_fkey" FOREIGN KEY (match_id_db)
+        REFERENCES public."Matches" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."MatchOdds"
+    OWNER to backend;

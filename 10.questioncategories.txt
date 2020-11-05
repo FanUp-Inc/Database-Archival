@@ -1,0 +1,19 @@
+-- Table: public.QuestionCategories
+
+-- DROP TABLE public."QuestionCategories";
+
+CREATE TABLE public."QuestionCategories"
+(
+    id integer NOT NULL DEFAULT nextval('"QuestionCategories_id_seq"'::regclass),
+    name character varying(255) COLLATE pg_catalog."default",
+    color character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "QuestionCategories_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."QuestionCategories"
+    OWNER to backend;

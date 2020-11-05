@@ -1,0 +1,24 @@
+-- Table: public.PlayerPropsStats
+
+-- DROP TABLE public."PlayerPropsStats";
+
+CREATE TABLE public."PlayerPropsStats"
+(
+    id integer NOT NULL DEFAULT nextval('"PlayerPropsStats_id_seq"'::regclass),
+    swish_match_id integer,
+    swish_player_id integer,
+    prop_id integer,
+    stat_id integer,
+    stat_name character varying(255) COLLATE pg_catalog."default",
+    stat_projection text COLLATE pg_catalog."default",
+    stat_lines text COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "PlayerPropsStats_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."PlayerPropsStats"
+    OWNER to backend;

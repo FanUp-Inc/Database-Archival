@@ -1,0 +1,51 @@
+-- Table: public.es_matches
+
+-- DROP TABLE public.es_matches;
+
+CREATE TABLE public.es_matches
+(
+    id integer NOT NULL DEFAULT nextval('es_matches_id_seq'::regclass),
+    es_match_id integer,
+    match_id integer,
+    league_id integer,
+    serie_id integer,
+    tournament_id integer,
+    name text COLLATE pg_catalog."default",
+    match_type text COLLATE pg_catalog."default",
+    official_stream_url text COLLATE pg_catalog."default",
+    slug text COLLATE pg_catalog."default",
+    status text COLLATE pg_catalog."default",
+    detailed_stats boolean,
+    draw boolean,
+    forfeit boolean,
+    live_embed_url text COLLATE pg_catalog."default",
+    begin_at timestamp with time zone,
+    end_at timestamp with time zone,
+    modified_at timestamp with time zone,
+    original_scheduled_at timestamp with time zone,
+    scheduled_at timestamp with time zone,
+    rescheduled boolean,
+    winner_type text COLLATE pg_catalog."default",
+    winner_id integer,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT es_matches_pkey PRIMARY KEY (id),
+    CONSTRAINT es_matches_es_match_id_key UNIQUE (es_match_id),
+    CONSTRAINT es_matches_league_id_fkey FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (league_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT es_matches_serie_id_fkey FOREIGN KEY (serie_id)
+        REFERENCES public.series (serie_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT es_matches_tournament_id_fkey FOREIGN KEY (tournament_id)
+        REFERENCES public.tournaments (tournament_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.es_matches
+    OWNER to backend;

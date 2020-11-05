@@ -1,0 +1,25 @@
+-- Table: public.MarketFixtures
+
+-- DROP TABLE public."MarketFixtures";
+
+CREATE TABLE public."MarketFixtures"
+(
+    id integer NOT NULL DEFAULT nextval('"MarketFixtures_id_seq"'::regclass),
+    swish_match_id integer,
+    season character varying(255) COLLATE pg_catalog."default",
+    date character varying(255) COLLATE pg_catalog."default",
+    swish_home_team_id integer,
+    swish_away_team_id integer,
+    money_line_json text COLLATE pg_catalog."default",
+    totals_json text COLLATE pg_catalog."default",
+    spread_json text COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "MarketFixtures_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."MarketFixtures"
+    OWNER to backend;

@@ -1,0 +1,53 @@
+-- Table: public.Matches
+
+-- DROP TABLE public."Matches";
+
+CREATE TABLE public."Matches"
+(
+    id integer NOT NULL DEFAULT nextval('"Matches_id_seq"'::regclass),
+    league_id integer,
+    league_tp_id character varying(255) COLLATE pg_catalog."default",
+    season_id character varying(255) COLLATE pg_catalog."default",
+    week_id character varying(255) COLLATE pg_catalog."default",
+    match_id character varying(255) COLLATE pg_catalog."default",
+    reference character varying(255) COLLATE pg_catalog."default",
+    sr_id character varying(255) COLLATE pg_catalog."default",
+    swish_id integer,
+    ps_id integer,
+    home_team_name character varying(255) COLLATE pg_catalog."default",
+    home_team_id character varying(255) COLLATE pg_catalog."default",
+    home_team_alias character varying(255) COLLATE pg_catalog."default",
+    away_team_name character varying(255) COLLATE pg_catalog."default",
+    away_team_id character varying(255) COLLATE pg_catalog."default",
+    away_team_alias character varying(255) COLLATE pg_catalog."default",
+    match_status character varying(255) COLLATE pg_catalog."default",
+    scheduled character varying(255) COLLATE pg_catalog."default",
+    scheduled_datetime timestamp with time zone,
+    scheduled_date date,
+    scheduled_time time without time zone,
+    tv_channel character varying(255) COLLATE pg_catalog."default",
+    tv_channel_logo character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Matches_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Matches_ps_id_key" UNIQUE (ps_id),
+    CONSTRAINT "Matches_swish_id_key" UNIQUE (swish_id),
+    CONSTRAINT "Matches_away_team_id_fkey" FOREIGN KEY (away_team_id)
+        REFERENCES public."Teams" (team_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Matches_home_team_id_fkey" FOREIGN KEY (home_team_id)
+        REFERENCES public."Teams" (team_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Matches_league_id_fkey" FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Matches"
+    OWNER to backend;

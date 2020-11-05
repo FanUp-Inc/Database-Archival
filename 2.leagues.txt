@@ -1,0 +1,25 @@
+-- Table: public.Leagues
+
+-- DROP TABLE public."Leagues";
+
+CREATE TABLE public."Leagues"
+(
+    id integer NOT NULL DEFAULT nextval('"Leagues_id_seq"'::regclass),
+    league_id integer,
+    short_code character varying(255) COLLATE pg_catalog."default",
+    name character varying(255) COLLATE pg_catalog."default",
+    short_name character varying(255) COLLATE pg_catalog."default",
+    img text COLLATE pg_catalog."default",
+    game_name text COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    banner_img text COLLATE pg_catalog."default",
+    CONSTRAINT "Leagues_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Leagues_league_id_key" UNIQUE (league_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Leagues"
+    OWNER to backend;

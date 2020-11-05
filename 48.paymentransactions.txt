@@ -1,0 +1,32 @@
+-- Table: public.PaymentTransactions
+
+-- DROP TABLE public."PaymentTransactions";
+
+CREATE TABLE public."PaymentTransactions"
+(
+    id integer NOT NULL DEFAULT nextval('"PaymentTransactions_id_seq"'::regclass),
+    user_id integer,
+    amount integer,
+    transaction_status character varying(255) COLLATE pg_catalog."default",
+    transaction_mode character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    payment_id character varying(255) COLLATE pg_catalog."default",
+    last4 character varying(255) COLLATE pg_catalog."default",
+    card_brand character varying(255) COLLATE pg_catalog."default",
+    card_type character varying(255) COLLATE pg_catalog."default",
+    confirmation_id character varying(255) COLLATE pg_catalog."default",
+    exp_month integer,
+    exp_year integer,
+    CONSTRAINT "PaymentTransactions_pkey" PRIMARY KEY (id),
+    CONSTRAINT "PaymentTransactions_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."PaymentTransactions"
+    OWNER to backend;

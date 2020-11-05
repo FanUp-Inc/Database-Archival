@@ -1,0 +1,21 @@
+-- Table: public.Brands
+
+-- DROP TABLE public."Brands";
+
+CREATE TABLE public."Brands"
+(
+    id integer NOT NULL DEFAULT nextval('"Brands_id_seq"'::regclass),
+    brand_name character varying(255) COLLATE pg_catalog."default",
+    img character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    influencer_id integer,
+    brand_prizes json,
+    CONSTRAINT "Brands_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Brands"
+    OWNER to backend;

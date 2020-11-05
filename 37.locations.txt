@@ -1,0 +1,20 @@
+-- Table: public.Locations
+
+-- DROP TABLE public."Locations";
+
+CREATE TABLE public."Locations"
+(
+    id integer NOT NULL DEFAULT nextval('"Locations_id_seq"'::regclass),
+    location character varying(255) COLLATE pg_catalog."default",
+    latitude double precision,
+    longitude double precision,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Locations_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Locations"
+    OWNER to backend;

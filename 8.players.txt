@@ -1,0 +1,36 @@
+-- Table: public.Players
+
+-- DROP TABLE public."Players";
+
+CREATE TABLE public."Players"
+(
+    id integer NOT NULL DEFAULT nextval('"Players_id_seq"'::regclass),
+    team_id character varying(255) COLLATE pg_catalog."default",
+    player_id character varying(255) COLLATE pg_catalog."default",
+    player_name text COLLATE pg_catalog."default",
+    "position" character varying(255) COLLATE pg_catalog."default",
+    sr_id character varying(255) COLLATE pg_catalog."default",
+    swish_id integer,
+    ps_id integer,
+    img text COLLATE pg_catalog."default",
+    slug text COLLATE pg_catalog."default",
+    data json,
+    acronym text COLLATE pg_catalog."default",
+    is_popular boolean,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    tier integer,
+    CONSTRAINT "Players_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Players_ps_id_key" UNIQUE (ps_id),
+    CONSTRAINT "Players_swish_id_key" UNIQUE (swish_id),
+    CONSTRAINT "Players_team_id_fkey" FOREIGN KEY (team_id)
+        REFERENCES public."Teams" (team_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Players"
+    OWNER to backend;

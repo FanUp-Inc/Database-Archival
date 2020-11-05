@@ -1,0 +1,33 @@
+-- Table: public.Admins
+
+-- DROP TABLE public."Admins";
+
+CREATE TABLE public."Admins"
+(
+    id integer NOT NULL DEFAULT nextval('"Admins_id_seq"'::regclass),
+    role integer,
+    "fullName" character varying(255) COLLATE pg_catalog."default",
+    email character varying(255) COLLATE pg_catalog."default",
+    "userName" character varying(255) COLLATE pg_catalog."default",
+    password character varying(255) COLLATE pg_catalog."default",
+    mobile character varying(255) COLLATE pg_catalog."default",
+    country_code character varying(255) COLLATE pg_catalog."default",
+    latitude character varying(255) COLLATE pg_catalog."default",
+    longitude character varying(255) COLLATE pg_catalog."default",
+    address character varying(255) COLLATE pg_catalog."default",
+    activation_key character varying(255) COLLATE pg_catalog."default",
+    otp character varying(255) COLLATE pg_catalog."default",
+    email_verification integer,
+    mobile_verification integer,
+    notifications integer,
+    img character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Admins_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Admins"
+    OWNER to backend;

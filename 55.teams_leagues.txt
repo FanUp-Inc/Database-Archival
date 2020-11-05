@@ -1,0 +1,26 @@
+-- Table: public.teams_leagues
+
+-- DROP TABLE public.teams_leagues;
+
+CREATE TABLE public.teams_leagues
+(
+    id integer NOT NULL DEFAULT nextval('teams_leagues_id_seq'::regclass),
+    team_id integer,
+    league_id integer,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT teams_leagues_pkey PRIMARY KEY (id),
+    CONSTRAINT teams_leagues_league_id_fkey FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (league_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT teams_leagues_team_id_fkey FOREIGN KEY (team_id)
+        REFERENCES public."Teams" (ps_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.teams_leagues
+    OWNER to backend;

@@ -1,0 +1,26 @@
+-- Table: public.FundsPoints
+
+-- DROP TABLE public."FundsPoints";
+
+CREATE TABLE public."FundsPoints"
+(
+    id integer NOT NULL DEFAULT nextval('"FundsPoints_id_seq"'::regclass),
+    user_id integer,
+    points double precision,
+    cash integer,
+    credit_debit character varying(255) COLLATE pg_catalog."default",
+    type character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "FundsPoints_pkey" PRIMARY KEY (id),
+    CONSTRAINT "FundsPoints_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."FundsPoints"
+    OWNER to backend;

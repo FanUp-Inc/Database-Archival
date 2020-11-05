@@ -1,0 +1,20 @@
+-- Table: public.Pages
+
+-- DROP TABLE public."Pages";
+
+CREATE TABLE public."Pages"
+(
+    id integer NOT NULL DEFAULT nextval('"Pages_id_seq"'::regclass),
+    slug character varying(255) COLLATE pg_catalog."default",
+    title character varying(255) COLLATE pg_catalog."default",
+    content text COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Pages_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Pages"
+    OWNER to backend;

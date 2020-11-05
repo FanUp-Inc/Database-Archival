@@ -1,0 +1,52 @@
+-- Table: public.Users
+
+-- DROP TABLE public."Users";
+
+CREATE TABLE public."Users"
+(
+    id integer NOT NULL DEFAULT nextval('"Users_id_seq"'::regclass),
+    login_type character varying(255) COLLATE pg_catalog."default",
+    social_id character varying(255) COLLATE pg_catalog."default",
+    device_type character varying(255) COLLATE pg_catalog."default",
+    device_token character varying(255) COLLATE pg_catalog."default",
+    "fullName" character varying(255) COLLATE pg_catalog."default",
+    email character varying(255) COLLATE pg_catalog."default",
+    "userName" character varying(255) COLLATE pg_catalog."default",
+    password character varying(255) COLLATE pg_catalog."default",
+    mobile character varying(255) COLLATE pg_catalog."default",
+    country_code character varying(255) COLLATE pg_catalog."default",
+    latitude double precision,
+    longitude double precision,
+    address character varying(255) COLLATE pg_catalog."default",
+    state_code character varying(255) COLLATE pg_catalog."default",
+    city_state_code character varying(255) COLLATE pg_catalog."default",
+    activation_key character varying(255) COLLATE pg_catalog."default",
+    otp character varying(255) COLLATE pg_catalog."default",
+    email_verification integer,
+    mobile_verification integer,
+    notifications integer,
+    img character varying(255) COLLATE pg_catalog."default",
+    "customerId" character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    is_expect_id_success boolean,
+    kyc_reason text COLLATE pg_catalog."default",
+    is_expect_age_success boolean,
+    kyc_id character varying(255) COLLATE pg_catalog."default",
+    is_scan_verify_success boolean,
+    "zipCode" character varying(255) COLLATE pg_catalog."default",
+    ssn character varying(255) COLLATE pg_catalog."default",
+    "lastName" character varying(255) COLLATE pg_catalog."default",
+    country_name character varying(255) COLLATE pg_catalog."default",
+    "firstName" character varying(255) COLLATE pg_catalog."default",
+    dob timestamp with time zone,
+    influencer_id integer,
+    user_point_balance integer,
+    CONSTRAINT "Users_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Users"
+    OWNER to backend;

@@ -1,0 +1,21 @@
+-- Table: public.FeedSliders
+
+-- DROP TABLE public."FeedSliders";
+
+CREATE TABLE public."FeedSliders"
+(
+    id integer NOT NULL DEFAULT nextval('"FeedSliders_id_seq"'::regclass),
+    title character varying(255) COLLATE pg_catalog."default",
+    content text COLLATE pg_catalog."default",
+    is_overlay integer,
+    img character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "FeedSliders_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."FeedSliders"
+    OWNER to backend;

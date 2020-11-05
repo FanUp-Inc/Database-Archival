@@ -1,0 +1,34 @@
+-- Table: public.es_games
+
+-- DROP TABLE public.es_games;
+
+CREATE TABLE public.es_games
+(
+    id integer NOT NULL DEFAULT nextval('es_games_id_seq'::regclass),
+    game_id integer,
+    match_id integer,
+    winner_id integer,
+    winner_type character varying(255) COLLATE pg_catalog."default",
+    "position" integer,
+    status character varying(255) COLLATE pg_catalog."default",
+    video_url character varying(255) COLLATE pg_catalog."default",
+    length integer,
+    forfeit boolean,
+    finished boolean,
+    detailed_stats boolean,
+    complete boolean,
+    begin_at timestamp with time zone,
+    end_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT es_games_pkey PRIMARY KEY (id),
+    CONSTRAINT es_games_game_id_fkey FOREIGN KEY (game_id)
+        REFERENCES public.games (game_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.es_games
+    OWNER to backend;

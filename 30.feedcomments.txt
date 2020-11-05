@@ -1,0 +1,24 @@
+-- Table: public.FeedComments
+
+-- DROP TABLE public."FeedComments";
+
+CREATE TABLE public."FeedComments"
+(
+    id integer NOT NULL DEFAULT nextval('"FeedComments_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    bet_group_id character varying(255) COLLATE pg_catalog."default",
+    comments character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "FeedComments_pkey" PRIMARY KEY (id),
+    CONSTRAINT "FeedComments_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."FeedComments"
+    OWNER to backend;

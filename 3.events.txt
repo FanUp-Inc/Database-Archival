@@ -1,0 +1,45 @@
+-- Table: public.Events
+
+-- DROP TABLE public."Events";
+
+CREATE TABLE public."Events"
+(
+    id integer NOT NULL DEFAULT nextval('"Events_id_seq"'::regclass),
+    league_id integer,
+    event_name character varying(255) COLLATE pg_catalog."default",
+    event_start_date date,
+    event_end_date date,
+    img character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    contest_description text COLLATE pg_catalog."default",
+    prizes json,
+    prize_description text COLLATE pg_catalog."default",
+    total_contestants integer,
+    entry_fees integer,
+    chat_channel_url text COLLATE pg_catalog."default",
+    event_end_time time without time zone,
+    amount_of_challenge integer,
+    event_start_time time without time zone,
+    logo text COLLATE pg_catalog."default",
+    amount_of_rounds integer,
+    event_category integer,
+    gradient character varying(255) COLLATE pg_catalog."default",
+    minimum_contestants integer,
+    entry_fees_type character varying(255) COLLATE pg_catalog."default",
+    brand_id integer,
+    influencer_id integer,
+    banner_img text COLLATE pg_catalog."default",
+    "is_BestBall" boolean,
+    CONSTRAINT "Events_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Events_league_id_fkey" FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Events"
+    OWNER to backend;

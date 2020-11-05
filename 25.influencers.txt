@@ -1,0 +1,19 @@
+-- Table: public.Influencers
+
+-- DROP TABLE public."Influencers";
+
+CREATE TABLE public."Influencers"
+(
+    id integer NOT NULL DEFAULT nextval('"Influencers_id_seq"'::regclass),
+    influencer_name character varying(255) COLLATE pg_catalog."default",
+    img character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Influencers_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Influencers"
+    OWNER to backend;

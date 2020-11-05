@@ -1,0 +1,93 @@
+-- Table: public.Questions
+
+-- DROP TABLE public."Questions";
+
+CREATE TABLE public."Questions"
+(
+    id integer NOT NULL DEFAULT nextval('"Questions_id_seq"'::regclass),
+    question_type integer,
+    question_category integer,
+    question_belongs_to character varying(255) COLLATE pg_catalog."default",
+    match_id integer,
+    player1_id integer,
+    team1_id integer,
+    event_id integer,
+    league_id integer,
+    league_question_type character varying(255) COLLATE pg_catalog."default",
+    question text COLLATE pg_catalog."default",
+    options json,
+    options_count integer,
+    answer integer,
+    is_popular boolean,
+    is_trending boolean,
+    question_image text COLLATE pg_catalog."default",
+    question_logo text COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    team2_id integer,
+    player2_id integer,
+    player3_id integer,
+    player4_id integer,
+    player5_id integer,
+    player6_id integer,
+    player7_id integer,
+    CONSTRAINT "Questions_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Questions_event_id_fkey" FOREIGN KEY (event_id)
+        REFERENCES public."Events" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_league_id_fkey" FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_match_id_fkey" FOREIGN KEY (match_id)
+        REFERENCES public."Matches" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player1_id_fkey" FOREIGN KEY (player1_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player2_id_fkey" FOREIGN KEY (player2_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player3_id_fkey" FOREIGN KEY (player3_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player4_id_fkey" FOREIGN KEY (player4_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player5_id_fkey" FOREIGN KEY (player5_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player6_id_fkey" FOREIGN KEY (player6_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_player7_id_fkey" FOREIGN KEY (player7_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_question_category_fkey" FOREIGN KEY (question_category)
+        REFERENCES public."QuestionCategories" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_team1_id_fkey" FOREIGN KEY (team1_id)
+        REFERENCES public."Teams" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Questions_team2_id_fkey" FOREIGN KEY (team2_id)
+        REFERENCES public."Teams" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Questions"
+    OWNER to backend;

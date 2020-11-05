@@ -1,0 +1,23 @@
+-- Table: public.Followers
+
+-- DROP TABLE public."Followers";
+
+CREATE TABLE public."Followers"
+(
+    id integer NOT NULL DEFAULT nextval('"Followers_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    member_id integer,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "Followers_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Followers_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Followers"
+    OWNER to backend;

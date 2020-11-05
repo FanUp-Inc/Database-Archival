@@ -1,0 +1,27 @@
+-- Table: public.GroupUsers
+
+-- DROP TABLE public."GroupUsers";
+
+CREATE TABLE public."GroupUsers"
+(
+    id integer NOT NULL DEFAULT nextval('"GroupUsers_id_seq"'::regclass),
+    group_id integer NOT NULL,
+    user_id integer NOT NULL,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "GroupUsers_pkey" PRIMARY KEY (id),
+    CONSTRAINT "GroupUsers_group_id_fkey" FOREIGN KEY (group_id)
+        REFERENCES public."Groups" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "GroupUsers_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."GroupUsers"
+    OWNER to backend;

@@ -1,0 +1,34 @@
+-- Table: public.es_game_frames
+
+-- DROP TABLE public.es_game_frames;
+
+CREATE TABLE public.es_game_frames
+(
+    id integer NOT NULL DEFAULT nextval('es_game_frames_id_seq'::regclass),
+    game_id integer,
+    match_id integer,
+    tournament_id integer,
+    blue json,
+    red json,
+    "current_timestamp" integer,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT es_game_frames_pkey PRIMARY KEY (id),
+    CONSTRAINT es_game_frames_game_id_fkey FOREIGN KEY (game_id)
+        REFERENCES public.games (game_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT es_game_frames_match_id_fkey FOREIGN KEY (match_id)
+        REFERENCES public."Matches" (ps_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT es_game_frames_tournament_id_fkey FOREIGN KEY (tournament_id)
+        REFERENCES public.tournaments (tournament_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.es_game_frames
+    OWNER to backend;

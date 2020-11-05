@@ -1,0 +1,68 @@
+-- Table: public.Bets
+
+-- DROP TABLE public."Bets";
+
+CREATE TABLE public."Bets"
+(
+    id integer NOT NULL DEFAULT nextval('"Bets_id_seq"'::regclass),
+    user_id integer NOT NULL,
+    bet_type character varying(255) COLLATE pg_catalog."default",
+    question_id integer,
+    match_id integer,
+    event_id integer,
+    league_id integer,
+    play_type character varying(255) COLLATE pg_catalog."default",
+    option_chose json,
+    option_number integer,
+    spread_total double precision,
+    bet_points integer,
+    win_points double precision,
+    challenge_win_points double precision,
+    group_id integer,
+    bet_group_id character varying(255) COLLATE pg_catalog."default",
+    is_challenge integer,
+    opponent_user_id integer,
+    is_challenge_accept integer,
+    is_group_challenge integer,
+    challenger_group_id integer,
+    is_group_challenge_accept integer,
+    single_bet_status character varying(255) COLLATE pg_catalog."default",
+    group_bet_status character varying(255) COLLATE pg_catalog."default",
+    final_bet_status character varying(255) COLLATE pg_catalog."default",
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    opponent_win_points double precision,
+    is_counter_challenge boolean,
+    is_rematch boolean,
+    CONSTRAINT "Bets_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Bets_event_id_fkey" FOREIGN KEY (event_id)
+        REFERENCES public."Events" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Bets_group_id_fkey" FOREIGN KEY (group_id)
+        REFERENCES public."Groups" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Bets_league_id_fkey" FOREIGN KEY (league_id)
+        REFERENCES public."Leagues" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Bets_match_id_fkey" FOREIGN KEY (match_id)
+        REFERENCES public."Matches" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Bets_question_id_fkey" FOREIGN KEY (question_id)
+        REFERENCES public."Questions" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "Bets_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public."Users" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Bets"
+    OWNER to backend;

@@ -1,0 +1,27 @@
+-- Table: public.LocationPlayers
+
+-- DROP TABLE public."LocationPlayers";
+
+CREATE TABLE public."LocationPlayers"
+(
+    id integer NOT NULL DEFAULT nextval('"LocationPlayers_id_seq"'::regclass),
+    location_team_id integer NOT NULL,
+    player_id integer NOT NULL,
+    status integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT "LocationPlayers_pkey" PRIMARY KEY (id),
+    CONSTRAINT "LocationPlayers_location_team_id_fkey" FOREIGN KEY (location_team_id)
+        REFERENCES public."LocationTeams" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "LocationPlayers_player_id_fkey" FOREIGN KEY (player_id)
+        REFERENCES public."Players" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."LocationPlayers"
+    OWNER to backend;
