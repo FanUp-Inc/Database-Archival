@@ -1,0 +1,45 @@
+-- FUNCTION: public.insertrecords_tournaments()
+
+-- DROP FUNCTION public.insertrecords_tournaments();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_tournaments(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."tournaments_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+   'select * from Public."tournaments"'
+  ) as t1(
+    id integer,
+    tournament_id integer,
+    league_id integer,
+    serie_id integer,
+    winner_id integer,
+    winner_type text ,
+    name text ,
+    prizepool text ,
+    live_supported boolean,
+    slug text ,
+    created_at timestamp with time zone ,
+    updated_at timestamp with time zone 
+       )
+ );
+ INSERT INTO Public."tournaments" SELECT * FROM public."tournaments_Bak" ;
+ select count(*) into total FROM public."tournaments_Bak";   
+ Drop table public."tournaments_Bak" ;
+ RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_tournaments()
+    OWNER TO postgres;

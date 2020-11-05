@@ -1,0 +1,41 @@
+-- FUNCTION: public.insertrecords_feedlikes()
+
+-- DROP FUNCTION public.insertrecords_feedlikes();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_feedlikes(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."FeedLikes_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+  'select * from Public."FeedLikes" '
+  ) as t1(
+   id integer,
+    user_id integer ,
+    bet_group_id character varying(255) ,
+    is_like integer,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone,
+    like_type integer
+       )
+ );
+ INSERT INTO Public."FeedLikes" SELECT * FROM public."FeedLikes_Bak" ;
+ select count(*) into total FROM public."FeedLikes_Bak";   
+ Drop table public."FeedLikes_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_feedlikes()
+    OWNER TO postgres;

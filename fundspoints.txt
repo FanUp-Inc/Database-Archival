@@ -1,0 +1,42 @@
+-- FUNCTION: public.insertrecords_fundspoints()
+
+-- DROP FUNCTION public.insertrecords_fundspoints();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_fundspoints(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."FundsPoints_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+   'select * from Public."FundsPoints" '
+  ) as t1(
+   id integer ,
+    user_id integer,
+    points double precision,
+    cash integer,
+    credit_debit character varying(255) ,
+    type character varying(255) ,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone 
+  )
+ );
+ INSERT INTO Public."FundsPoints" SELECT * FROM public."FundsPoints_Bak" ;
+ select count(*) into total FROM public."FundsPoints_Bak";   
+ Drop table public."FundsPoints_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_fundspoints()
+    OWNER TO postgres;

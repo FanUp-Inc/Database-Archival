@@ -1,0 +1,53 @@
+-- FUNCTION: public.insertrecords_teams()
+
+-- DROP FUNCTION public.insertrecords_teams();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_teams(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."Teams_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+  'select * from Public."Teams"'
+  ) as t1(
+    id integer ,
+    league_id integer,
+    match_id character varying(255) ,
+    team_id character varying(255) ,
+    team_name character varying(255) ,
+    alias character varying(255) ,
+    sr_id character varying(255) ,
+    swish_id integer,
+    ps_id integer,
+    img text ,
+    short_title text,
+    acronym character varying(255)  ,
+    location character varying(255),
+    data json,
+    game_name text ,
+    gradient character varying(255) ,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone ,
+    rivals json
+	      )
+ );
+ INSERT INTO Public."Teams" SELECT * FROM public."Teams_Bak" ;
+ select count(*) into total FROM public."Teams_Bak";   
+ Drop table public."Teams_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_teams()
+    OWNER TO postgres;

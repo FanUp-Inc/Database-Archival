@@ -1,0 +1,39 @@
+-- FUNCTION: public.insertrecords_locationleagues()
+
+-- DROP FUNCTION public.insertrecords_locationleagues();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_locationleagues(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."LocationLeagues_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+  'select * from Public."LocationLeagues" '
+  ) as t1(
+    id integer ,
+    location_id integer ,
+    league_id integer ,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone 
+	      )
+ );
+ INSERT INTO Public."LocationLeagues" SELECT * FROM public."LocationLeagues_Bak" ;
+ select count(*) into total FROM public."LocationLeagues_Bak";   
+ Drop table public."LocationLeagues_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_locationleagues()
+    OWNER TO postgres;

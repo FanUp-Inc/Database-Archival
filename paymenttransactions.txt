@@ -1,0 +1,48 @@
+-- FUNCTION: public.insertrecords_paymenttransactions()
+
+-- DROP FUNCTION public.insertrecords_paymenttransactions();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_paymenttransactions(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."PaymentTransactions_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+  'select * from Public."PaymentTransactions" '
+  ) as t1(
+   id integer ,
+    user_id integer,
+    amount integer,
+    transaction_status character varying(255) ,
+    transaction_mode character varying(255) ,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone ,
+    payment_id character varying(255) ,
+    last4 character varying(255),
+    card_brand character varying(255) ,
+    card_type character varying(255) ,
+    confirmation_id character varying(255) ,
+    exp_month integer,
+    exp_year integer
+       )
+ );
+ INSERT INTO Public."PaymentTransactions" SELECT * FROM public."PaymentTransactions_Bak" ;
+ select count(*) into total FROM public."PaymentTransactions_Bak";   
+ Drop table public."PaymentTransactions_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_paymenttransactions()
+    OWNER TO postgres;

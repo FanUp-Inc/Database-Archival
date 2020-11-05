@@ -1,0 +1,61 @@
+-- FUNCTION: public.insertrecords_events()
+
+-- DROP FUNCTION public.insertrecords_events();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_events(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."Events_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+   'select * from Public."Events" '
+  ) as t1(
+   id integer,
+    league_id integer,
+    event_name character varying(255) ,
+    event_start_date date,
+    event_end_date date,
+    img character varying(255) ,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone ,
+    contest_description text ,
+    prizes json,
+    prize_description text ,
+    total_contestants integer,
+    entry_fees integer,
+    chat_channel_url text ,
+    event_end_time time without time zone,
+    amount_of_challenge integer,
+    event_start_time time without time zone,
+    logo text ,
+    amount_of_rounds integer,
+    event_category integer,
+    gradient character varying(255) ,
+    minimum_contestants integer,
+    entry_fees_type character varying(255) ,
+    brand_id integer,
+    influencer_id integer,
+    banner_img text ,
+    "is_BestBall" boolean
+	  )
+ );
+ INSERT INTO Public."Events" SELECT * FROM public."Events_Bak" ;
+ select count(*) into total FROM public."Events_Bak";   
+ Drop table public."Events_Bak" ;
+ RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_events()
+    OWNER TO postgres;

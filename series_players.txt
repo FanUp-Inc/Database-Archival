@@ -1,0 +1,38 @@
+-- FUNCTION: public.insertrecords_series_players()
+
+-- DROP FUNCTION public.insertrecords_series_players();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_series_players(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."series_players_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+  'select * from Public."series_players" '
+  ) as t1(
+   id integer ,
+    player_id integer,
+    serie_id integer,
+    created_at timestamp with time zone ,
+    updated_at timestamp with time zone
+  )
+ ) ;
+ INSERT INTO Public."series_players" SELECT * FROM public."series_players_Bak" ;
+ select count(*) into total FROM public."series_players_Bak";   
+ Drop table public."series_players_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_series_players()
+    OWNER TO postgres;

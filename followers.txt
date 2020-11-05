@@ -1,0 +1,39 @@
+-- FUNCTION: public.insertrecords_followers()
+
+-- DROP FUNCTION public.insertrecords_followers();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_followers(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."Followers_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+   'select * from Public."Followers" '
+  ) as t1(
+    id integer,
+    user_id integer ,
+    member_id integer,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone 
+  )
+ );
+ INSERT INTO Public."Followers" SELECT * FROM public."Followers_Bak" ;
+ select count(*) into total FROM public."Followers_Bak";   
+ Drop table public."Followers_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_followers()
+    OWNER TO postgres;

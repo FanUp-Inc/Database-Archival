@@ -1,0 +1,39 @@
+-- FUNCTION: public.insertrecords_influencers()
+
+-- DROP FUNCTION public.insertrecords_influencers();
+
+CREATE OR REPLACE FUNCTION public.insertrecords_influencers(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+declare
+	total integer;
+BEGIN
+ create table public."Influencers_Bak" as(
+ select t1.* 
+ from dblink(
+   'dbname=fanup_qa user=postgres password=FLV3QEDhcN38mBe7',
+  'select * from Public."Influencers"'
+  ) as t1(
+   id integer ,
+    influencer_name character varying(255) ,
+    img character varying(255)  ,
+    status integer,
+    "createdAt" timestamp with time zone ,
+    "updatedAt" timestamp with time zone 
+          )
+ );
+ INSERT INTO Public."Influencers" SELECT * FROM public."Influencers_Bak" ;
+ select count(*) into total FROM public."Influencers_Bak";   
+ Drop table public."Influencers_Bak" ;
+   RETURN total;
+END;
+$BODY$;
+
+ALTER FUNCTION public.insertrecords_influencers()
+    OWNER TO postgres;
